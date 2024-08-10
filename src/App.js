@@ -5,6 +5,22 @@ import taskCompleted from "./assets/resources/task-completed.svg";
 import pending from "./assets/resources/pending.svg";
 import completed from './assets/resources/completed.svg'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import FabButton from './Components/FabButton'
+
+const fabButtonStyles={
+  
+    width: '56px',
+    height: '56px',
+    borderRadius: '50%',
+    backgroundColor: '#673AB7',
+    color: 'white',
+    border: 'none',
+    fontSize: '24px',
+    cursor: 'pointer',
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+    transition: 'background-color 0.3s',
+  
+}
 
 const Main = () => {
   return (
@@ -27,6 +43,7 @@ const Main = () => {
         subtitle={"tasks completed"}
         number={12}
       />
+      <FabButton text={'+'} onClick={""}  styles={fabButtonStyles}/>
     </div>
   );
 };
