@@ -1,0 +1,32 @@
+.app-bar{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    background-color: #673AB7;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.logo{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    margin: 10px;
+    text-align: center;
+    font-size: 15;
+    color: #eee25b;
+
+}
+.logo > img{
+    width: 32px;
+    height: 32px;
+    margin-right: 20px;
+}
+.nav-items{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 10px;
+}
