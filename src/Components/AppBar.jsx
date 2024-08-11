@@ -1,42 +1,48 @@
-import React, { Component } from 'react';
-import logo from '../assets/resources/logo.svg';
-import '../styles/AppBar.css'
-import Button from './Button.jsx';
+import React, { Component } from "react";
+import logo from "../assets/resources/logo.svg";
+import "../styles/AppBar.css";
+import NavItem from "./NavItem";
 
 
 
 const Logo = ({ logo, title }) => {
   return (
-    <div className='logo'>
-      <img src={logo} alt='Task Manager' />
+    <div className="logo">
+      <img src={logo} alt="Task Manager" />
       <label>{title.toUpperCase()}</label>
     </div>
   );
 };
-const buttonStyles = {
-    backgroundColor: '#eee25b',
-    color: '#673AB7',
-    padding: '10px',
-}
 
-const NavItem = ({navItemName, onClick, styles}) => {
-    return (
-        <Button text={navItemName} onClick={onClick} styles = {styles} />
-    )
-}
+
+const navItemStyles = {
+  backgroundColor: "#eee25b",
+  color: "#673AB7",
+};
 
 class AppBar extends Component {
-    home() {
-
-    }
+  home() {}
   render() {
     return (
-      <div className='app-bar'>
+      <div className="app-bar">
         <Logo logo={logo} title={"Task Manager"} />
-        <div className='nav-items'>
-            <NavItem navItemName={'HOME'} onClick={this.home} styles={buttonStyles} />
-            <NavItem navItemName={'ABOUT'} onClick={this.home} styles={buttonStyles}  />
-            <NavItem navItemName={'CONTACT'} onClick={this.home} styles={buttonStyles} />
+        <div className="nav-items">
+          <NavItem navItemName={"HOME"} routeTo={"/"} styles={navItemStyles} />
+          <NavItem
+            navItemName={"TASKS"}
+            routeTo={"tasklist"}
+            styles={navItemStyles}
+          />
+          <NavItem
+            navItemName={"ABOUT"}
+            routeTo={"/about"}
+            styles={navItemStyles}
+          />
+          <NavItem
+            navItemName={"CONTACT"}
+            routeTo={"/contact"}
+            styles={navItemStyles}
+          />
         </div>
       </div>
     );
