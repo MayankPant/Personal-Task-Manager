@@ -9,16 +9,10 @@ import FabButton from './Components/FabButton'
 
 const fabButtonStyles={
   
-    width: '56px',
-    height: '56px',
-    borderRadius: '50%',
     backgroundColor: '#673AB7',
     color: 'white',
     border: 'none',
     fontSize: '24px',
-    cursor: 'pointer',
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
-    transition: 'background-color 0.3s',
   
 }
 

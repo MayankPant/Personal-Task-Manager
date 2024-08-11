@@ -17,11 +17,6 @@ const buttonStyles = {
     backgroundColor: '#eee25b',
     color: '#673AB7',
     padding: '10px',
-    width: '100px',
-    height: '40px',
-    margin: '3px',
-    borderRadius: '5px',
-    
 }
 
 const NavItem = ({navItemName, onClick, styles}) => {
