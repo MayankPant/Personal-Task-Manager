@@ -24,7 +24,7 @@ class Button extends Component{
             margin: '3px',
             borderRadius: '5px',
             cursor: 'pointer',
-            transition: 'background-color 0.3s',
+            transition: 'box-shadow 0.3s',
           }
     
           // Styles for hover effect

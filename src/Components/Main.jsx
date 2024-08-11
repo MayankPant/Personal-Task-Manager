@@ -4,6 +4,7 @@ import taskCompleted from "../assets/resources/task-completed.svg";
 import pending from "../assets/resources/pending.svg";
 import completed from '../assets/resources/completed.svg'
 import FabButton from './FabButton'
+import ListItem from './ListItem.jsx';
 import '../styles/Main.css'
 
 const fabButtonStyles={
@@ -18,6 +19,7 @@ const fabButtonStyles={
 const Main = () => {
     return (
       <div className="App-main">
+        <div className='cards'>
         <Card
           icon={taskCompleted}
           title={"Total Tasks"}
@@ -37,6 +39,12 @@ const Main = () => {
           number={12}
         />
         <FabButton text={'+'} onClick={""}  styles={fabButtonStyles}/>
+        </div>
+        <div className='recent-tasks'>
+            <ListItem taskName={'Design Homepage Layout'} dueDate={'2024-08-15'} priority={'High'}  status={'In Progress'} assignedTo='Alice'/>
+            <ListItem taskName={'Optimise Database Queries'} dueDate={'2024-08-19'} priority={'low'}  status={'Completed'} assignedTo='Morgan'/>
+
+        </div>
       </div>
     );
   };

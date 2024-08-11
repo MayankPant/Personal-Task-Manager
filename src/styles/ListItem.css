@@ -1,0 +1,116 @@
+.list-item {
+    padding: 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color:#eee25b;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #693bb8;
+    position: relative;
+    box-shadow: 0px 0px 2px 2px #7c49d3;
+
+  }
+  
+  .list-item.hovered {
+    background-color: #eee25bce;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px 5px #7c49d3;
+
+  }
+  
+  .task-details {
+    display: flex;
+    align-items: center;
+    
+  }
+  
+  .task-icon {
+    margin-right: 20px;
+    margin-left: 0px;
+    color: #eee25b;
+    font-size: 1.5em;
+    background-color: #693bb8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 15px 0px 15px;
+    border-radius: 0px 10px 10px 0px;
+    position:absolute;
+    left: 0px;
+    height: 70%;
+  }
+  
+  .task-name {
+    font-size: 1.7em;
+    font-weight: bold;
+    font-variant-caps: all-petite-caps;
+    color: #693bb8;
+    margin-left: 10px;
+  }
+  
+  .task-info {
+    margin: 5px 0;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+  }
+  
+  .info-icon {
+    margin-right: 5px;
+    
+  }
+  
+  .priority {
+    color: inherit;
+  }
+  
+  .priority.high {
+    color: red;
+  }
+  
+  .priority.medium {
+    color: orange;
+  }
+  
+  .priority.low {
+    color: green;
+  }
+  
+  .task-meta {
+    text-align: right;
+  }
+  
+  .task-status {
+    margin: 5px 0;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+  }
+  
+  .status-icon {
+    margin-right: 5px;
+  }
+  
+  .completed {
+    color: green;
+  }
+  
+  .in-progress {
+    color: blue;
+  }
+  
+  .pending {
+    color: orange;
+  }
+  
+  .task-assigned {
+    margin: 5px 0;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+  }
+  

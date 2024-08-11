@@ -8,12 +8,12 @@
   flex-direction: column;
   border-radius: 5px;
   box-shadow: 0px 0px 2px 2px #7c49d3;
+  transition: 'background-color 0.3s';
 }
 .card-wrapper:hover{
     background-color: #eee25be3;
     color:  #683ab7c5;
     cursor: pointer;
-    transition: cubic-bezier(0.785, 0.135, 0.15, 0.86);
     box-shadow: 0px 0px 5px 5px #7c49d3;
 }
 .icon {

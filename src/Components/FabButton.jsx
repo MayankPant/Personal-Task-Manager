@@ -22,7 +22,7 @@ class FabButton extends Component {
         height: '56px',
         borderRadius: '50%',
         cursor: 'pointer',
-        transition: 'background-color 0.3s',
+        transition: 'box-shadow 0.3s',
       }
 
       // Styles for hover effect
