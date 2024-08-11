@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../assets/resources/logo.svg';
 import '../styles/AppBar.css'
-import Button from './Button';
+import Button from './Button.jsx';
 
 
 
