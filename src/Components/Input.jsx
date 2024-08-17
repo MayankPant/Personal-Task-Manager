@@ -15,6 +15,7 @@ class Input extends Component {
       meta: meta,
     };
   }
+
   handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -27,6 +28,7 @@ class Input extends Component {
       this.setState({ [name]: e.target.files[0] });
     } else {
       this.setState({ [name]: value });
+      this.props.onChange(name, value);
     }
   };
 
@@ -44,6 +46,8 @@ class Input extends Component {
               type={this.props.type}
               name={this.props.name}
               id={this.props.name}
+              value={this.state.value}
+              onChange={this.handleChange}
               onFocus={() => (this.type = "date")}
               onBlur={() => (this.type = "text")}
               placeholder={this.props.placeholder}
@@ -61,7 +65,8 @@ class Input extends Component {
           <input
             type={this.props.type}
             name={this.props.name}
-            value={this.props.onChange}
+            value={this.state.value}
+            onChange={this.handleChange}
             placeholder={
               this.props.type !== "date" ? this.props.placeholder : {}
             }
@@ -109,7 +114,7 @@ class Input extends Component {
                     name={this.props.name}
                     label={option.label}
                     onChange={this.handleChange}
-                    value={option.value}
+                    value={this.state.value}
                     checked = {true}
                   />
                 </div>
@@ -133,6 +138,7 @@ class Input extends Component {
                     name={this.props.name}
                     label={option.label}
                     onChange={this.handleChange}
+                    value={this.state.value}
                   />
                 </div>
               );
