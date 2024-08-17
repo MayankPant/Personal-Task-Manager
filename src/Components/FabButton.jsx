@@ -38,7 +38,7 @@ class FabButton extends Component {
         ...this.state.isHovered ? hoverStyles: {}
     }
     return (
-      <div class="fab-container">
+      <div className="fab-container">
         <button
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}

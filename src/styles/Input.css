@@ -1,0 +1,97 @@
+.input-wrapper, .list,  .checkbox{
+  font-weight: 900;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 10px;
+}
+.input-wrapper > label {
+  padding: 5px;
+  margin-right: 10px;
+}
+input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input:focus {
+  border-color: #673ab7;
+  outline: none;
+  box-shadow: 0 0 5px #673ab7;
+}
+
+input::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+input[type='text'].date-input{
+  color: #888;
+  font-style: italic;
+}
+.list > label{
+
+  padding: 5px;
+  margin-right: 10px;
+  
+}
+
+select{
+  width: 80%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  color: #333;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;;
+  background-size: 16px;
+  padding-right: 30px; /* Adjust based on arrow size */
+}
+
+
+.radio-buttons {
+  font-weight: 900;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 20px 0px 20px 0px; 
+}
+
+
+input[type="radio"] {
+  display: none;
+}
+
+
+.radio-label {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* Style the custom radio button */
+.radio-label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #673ab7;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* Style the checked state */
+input[type="radio"]:checked + .radio-label::before {
+  background: #000;
+}
