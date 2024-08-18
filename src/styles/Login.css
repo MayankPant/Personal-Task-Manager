@@ -12,6 +12,7 @@
   position: absolute;
   height: 100%;
   width: 100%;
+  background-color: #eee25b;
 }
 
 .panel {
@@ -33,9 +34,9 @@
   align-items: center;
 }
 
-.panel > img{
-    width: 60%;
-    height: 60%;
-  filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg)
-    brightness(104%) contrast(97%);
+.panel > img {
+  width: 60%;
+  height: 60%;
+  filter: invert(50%) sepia(100%) saturate(4000%) hue-rotate(250deg)
+    brightness(90%) contrast(110%);
 }

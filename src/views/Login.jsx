@@ -9,52 +9,50 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        login_info: {
-            username: '',
-            password: ''
-        }
-    }
-    
+      login_info: {
+        username: "",
+        password: "",
+      },
+    };
   }
 
   handleInputChange = (name, value) => {
-
-    this.setState(prevState => ({
-        login_info: {
-            ...prevState.login_info,
-            [name]: value
-        }
+    this.setState((prevState) => ({
+      login_info: {
+        ...prevState.login_info,
+        [name]: value,
+      },
     }));
   };
 
   login = async () => {
-    const loginUrl = process.env.REACT_APP_AUTH_BASE_ADDRESS.concat("/api/auth/login");
+    const loginUrl =
+      process.env.REACT_APP_AUTH_BASE_ADDRESS.concat("/api/auth/login");
     console.log("Login Url: ", loginUrl);
     console.log("Entered username: ", this.state.login_info.username);
     console.log("Entered password: ", this.state.login_info.password);
     const payload = {
-        "username": this.state.login_info.username,
-        "password": this.state.login_info.password
-    }
+      username: this.state.login_info.username,
+      password: this.state.login_info.password,
+    };
     try {
-        var response = await axios.post(loginUrl, payload);
-        console.log("Returned Response from login: ", response);
-        if(response.status === 200){
-            // set the loggedIn state and token described in <App />
-            console.log("Recieved JWT token: ", response.data.token);
-            this.props.onChange(response.data.token);
-        }
-
+      var response = await axios.post(loginUrl, payload);
+      console.log("Returned Response from login: ", response);
+      if (response.status === 200) {
+        // set the loggedIn state and token described in <App />
+        console.log("Recieved JWT token: ", response.data.token);
+        this.props.onChange(response.data.token);
+      }
     } catch (error) {
-        console.log("Error Occured", error);
+      console.log("Error Occured", error);
     }
-  }
+  };
 
   render() {
     return (
       <div className="login-container">
         <div className="panel">
-        <img src={logo} alt="icon" />
+          <img src={logo} alt="icon" />
         </div>
         <div className="panel">
           <div className="content-container">
@@ -75,7 +73,11 @@ class Login extends Component {
               value={this.state.login_info.login_password}
               meta={""}
             />
-            <Button text={"Login"} styles={{ backgroundColor: "#7c49d3" }} onClick={this.login} />
+            <Button
+              text={"Login"}
+              styles={{ backgroundColor: "#7c49d3" }}
+              onClick={this.login}
+            />
           </div>
         </div>
       </div>
