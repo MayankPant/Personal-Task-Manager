@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Main from "./Components/Main.jsx";
-import Header from "./Components/Header.jsx";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Main from "./views/Main.jsx";
+import Header from "./views/Header.jsx";
 import TaskList from "./Components/TaskList.jsx";
 import Login from "./views/Login.jsx";
 
@@ -98,14 +103,18 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div className="App">
         <Router>
           <Header />
           <main className="contents">
             <Routes>
-            <Route path="/" element={this.state.loggedIn ? <Navigate to={'/'} /> : <Login />} />
+              <Route
+                path="/"
+                element={
+                  this.state.loggedIn ? <Navigate to={"/"} /> : <Login />
+                }
+              />
               <Route path="/" element={<Main />} />
               <Route
                 path="tasklist"

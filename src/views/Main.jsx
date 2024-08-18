@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import Card from "./Card.jsx";
+import Card from "../Components/Card.jsx";
 import taskCompleted from "../assets/resources/task-completed.svg";
 import pending from "../assets/resources/pending.svg";
 import completed from "../assets/resources/completed.svg";
-import ListItem from "./ListItem.jsx";
-import Modal from "./Modal.jsx";
+import ListItem from "../Components/ListItem.jsx";
+import Modal from "../Components/Modal.jsx";
 import "../styles/Main.css";
-
-
 
 class Main extends Component {
   constructor(props) {
@@ -25,10 +23,9 @@ class Main extends Component {
     this.setState({ active: true });
   };
   render() {
-    
     return (
       <div className="App-main">
-        <Modal fabButtonText={"+"}/>
+        <Modal fabButtonText={"+"} />
         <div className="cards">
           <Card
             icon={taskCompleted}
@@ -48,7 +45,6 @@ class Main extends Component {
             subtitle={"tasks completed"}
             number={12}
           />
-          
         </div>
         <div className="recent-tasks">
           <ListItem
