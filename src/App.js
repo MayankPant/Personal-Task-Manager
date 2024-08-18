@@ -99,8 +99,28 @@ class App extends Component {
     super(props);
     this.state = {
       loggedIn: false,
+      token: null,
     };
   }
+
+  onLoginSucessfull = (token) => {
+    this.setState(
+      {
+        token: token, 
+        loggedIn: true,
+      },
+      () => {
+        // By passing a callback function as the second argument to this.setState, you
+        // can ensure that your console.log statements run after the state has been updated, 
+        // showing the correct, updated state.
+        console.log("Logged In successfully. Token: ", this.state.token);
+        console.log(
+          "Logged In successfully. Logged In status: ",
+          this.state.loggedIn
+        );
+      }
+    );
+  };
 
   render() {
     return (
@@ -112,10 +132,18 @@ class App extends Component {
               <Route
                 path="/"
                 element={
-                  this.state.loggedIn ? <Navigate to={"/"} /> : <Login />
+                  this.state.loggedIn ? (
+                    <Navigate to={"/home"} />
+                  ) : (
+                    <Login onChange={this.onLoginSucessfull} />
+                  )
                 }
               />
-              <Route path="/" element={<Main />} />
+              <Route path="/home" element={this.state.loggedIn ? (
+                    <Main />
+                  ) : (
+                    <Login onChange={this.onLoginSucessfull} />
+                  )} />
               <Route
                 path="tasklist"
                 element={<TaskList tasks={dummyTasks} />}

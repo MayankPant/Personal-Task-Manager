@@ -4,6 +4,7 @@ import '../styles/Button.css'
 class Button extends Component{
     constructor(props) {
         super(props);
+        console.log("Recieved onclick function: ", this.props.onClick)
         this.state = {
           isHovered: false,
         };

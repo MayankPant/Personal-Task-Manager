@@ -39,7 +39,12 @@ class Login extends Component {
     try {
         var response = await axios.post(loginUrl, payload);
         console.log("Returned Response from login: ", response);
-        
+        if(response.status === 200){
+            // set the loggedIn state and token described in <App />
+            console.log("Recieved JWT token: ", response.data.token);
+            this.props.onChange(response.data.token);
+        }
+
     } catch (error) {
         console.log("Error Occured", error);
     }
