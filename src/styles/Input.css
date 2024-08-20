@@ -2,7 +2,7 @@
   font-weight: 900;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-around;
   align-items: center;
   margin: 10px;
 }
@@ -56,42 +56,67 @@ select{
 }
 
 
-.radio-buttons {
-  font-weight: 900;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  margin: 20px 0px 20px 0px; 
+:root {
+  --form-control-color: rebeccapurple;
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
 
 input[type="radio"] {
-  display: none;
+  appearance: none;
 }
 
 
-.radio-label {
+.radio {
   position: relative;
-  padding-left: 30px;
-  cursor: pointer;
-  font-size: 18px;
+  font-family: system-ui, sans-serif;
+  font-size: 1.0rem;
+  font-weight: bold;
+  line-height: 1.1;
+  padding: 30px;
+  display: grid;
+  grid-template-rows: 1em auto;
+  gap: 0.5em;
 }
 
-/* Style the custom radio button */
-.radio-label::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #673ab7;
+input[type="radio"] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  appearance: none;
+  /* For iOS < 15 to remove gradient background */
+  background-color: #fff;
+  /* Not removed via appearance */
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
   border-radius: 50%;
-  background: #fff;
+  
 }
 
-/* Style the checked state */
-input[type="radio"]:checked + .radio-label::before {
-  background: #000;
+
+input[type="radio"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
 }
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="radio"]:focus {
+  outline: max(1px, 0.05em) solid currentColor;
+  outline-offset: max(1px, 0.05em);
+}
+

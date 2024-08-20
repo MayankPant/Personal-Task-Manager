@@ -99,21 +99,22 @@ class App extends Component {
     super(props);
     this.state = {
       loggedIn: false,
-      token: null,
+      JWTAccessToken: null,
+      JWTRefreshToken: null
     };
   }
 
-  onLoginSucessfull = (token) => {
+  onLoginSucessfull = (accessToken) => {
     this.setState(
       {
-        token: token,
+        JWTAccessToken: accessToken,
         loggedIn: true,
       },
       () => {
         // By passing a callback function as the second argument to this.setState, you
         // can ensure that your console.log statements run after the state has been updated,
         // showing the correct, updated state.
-        console.log("Logged In successfully. Token: ", this.state.token);
+        console.log("Logged In successfully. Access Token: ", this.state.JWTAccessToken);
         console.log(
           "Logged In successfully. Logged In status: ",
           this.state.loggedIn

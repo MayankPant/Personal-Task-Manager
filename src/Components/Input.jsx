@@ -1,162 +1,121 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import "../styles/Input.css";
 
 class Input extends Component {
-  constructor(props) {
-    super(props);
-    const { name, type, onChange, placeholder, value, meta } = this.props;
-
-    this.state = {
-      name: name,
-      type: type,
-      onChange: onChange,
-      placeholder: placeholder,
-      value: value,
-      meta: meta,
-    };
-  }
-
   handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked, files } = e.target;
+    const { onChange } = this.props;
 
     if (type === "checkbox") {
-      this.setState({
-        skills: { ...this.state.skills, [name]: checked },
-      });
+      onChange(name, checked);
     } else if (type === "file") {
-      console.log(type, "check here");
-      this.setState({ [name]: e.target.files[0] });
+      onChange(name, files[0]);
     } else {
-      this.setState({ [name]: value });
-      this.props.onChange(name, value);
+      onChange(name, value);
     }
   };
 
   render() {
-    if (!this.props.meta.data) {
-      if (this.props.type === "date") {
-        return (
-          <div className="input-wrapper">
-            <label htmlFor={this.props.name}>
-              {this.props.name.toUpperCase()}
-            </label>
-            <br></br>
-            <input
-              className="date-input"
-              type={this.props.type}
-              name={this.props.name}
-              id={this.props.name}
-              value={this.state.value}
+    const { name, type, placeholder, value, meta } = this.props;
+
+    const renderInput = () => {
+      switch (type) {
+        case "list":
+          return (
+            <select name={name} value={value} onChange={this.handleChange}>
+              {meta.data.options.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          );
+        case "radio":
+          return meta.data.options.map((option) => (
+            <div key={option.value} className="radio">
+              <label htmlFor={option.label}>
+                {option.label}
+                <input
+                type="radio"
+                id={option.value}
+                name={name}
+                value={option.value}
+                onChange={this.handleChange}
+                checked={this.props.value === option.value}
+              />
+              </label>
+              
+            </div>
+          ));
+        case "checkbox":
+          return meta.data.options.map((option) => (
+            <div key={option.value} className="checkbox">
+              <label htmlFor={option.value}>{option.label}</label>
+              <input
+                type="checkbox"
+                id={option.value}
+                name={name}
+                onChange={this.handleChange}
+                checked={value.includes(option.value)}
+              />
+            </div>
+          ));
+        case "textarea":
+          return (
+            <textarea
+              name={name}
+              value={value}
               onChange={this.handleChange}
-              onFocus={() => (this.type = "date")}
-              onBlur={() => (this.type = "text")}
-              placeholder={this.props.placeholder}
+              placeholder={placeholder}
+              style={{ height: "100px", width: "100%" }}
             />
-          </div>
-        );
+          );
+        default:
+          return (
+            <input
+              type={type}
+              name={name}
+              value={value}
+              onChange={this.handleChange}
+              placeholder={placeholder}
+              className={type === "date" ? "date-input" : ""}
+            />
+          );
       }
+    };
 
-      return (
-        <div className="input-wrapper">
-          <label htmlFor={this.props.name}>
-            {this.props.name.toUpperCase()}
-          </label>
-          <br></br>
-          <input
-            type={this.props.type}
-            name={this.props.name}
-            value={this.state.value}
-            onChange={this.handleChange}
-            placeholder={
-              this.props.type !== "date" ? this.props.placeholder : {}
-            }
-            style={
-              this.props.type === "textarea"
-                ? { height: "100px", width: "100%" }
-                : {}
-            }
-          />
-        </div>
-      );
-    } else {
-      if (this.props.meta.data.options) {
-        const options = this.props.meta.data.options;
-        var optionsInput = options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ));
-        switch (this.props.type) {
-          case "list":
-            return (
-              <div className="list">
-                <label htmlFor={this.props.name}>{this.props.name}</label>
-                <br />
-                <select
-                  name={this.props.name}
-                  onChange={this.handleChange}
-                  id={this.props.name}
-                >
-                  {optionsInput}
-                </select>
-              </div>
-            );
-          case "radio":
-            optionsInput = options.map((option) => {
-              return (
-                <div key={option.value}>
-                  <label className="radio-label" htmlFor={option.value}>
-                    {option.label}
-                  </label>
-                  <input
-                    type="radio"
-                    id={option.value}
-                    name={this.props.name}
-                    label={option.label}
-                    onChange={this.handleChange}
-                    value={this.state.value}
-                    checked = {true}
-                  />
-                </div>
-              );
-            });
-            return (
-              <div className="radio-buttons">
-                <label htmlFor={this.props.name}>{this.props.name}</label>
-                <br />
-                {optionsInput}
-              </div>
-            );
-          case "checkbox":
-            optionsInput = options.map((option) => {
-              return (
-                <div key={option.value} className="checkbox">
-                  <label htmlFor={option.value}>{option.label}</label>
-                  <input
-                    type="checkbox"
-                    id={option.value}
-                    name={this.props.name}
-                    label={option.label}
-                    onChange={this.handleChange}
-                    value={this.state.value}
-                  />
-                </div>
-              );
-            });
-            return (
-              <div>
-                <label htmlFor={this.props.name}>{this.props.name}</label>
-                <br />
-                {optionsInput}
-              </div>
-            );
-
-          default:
-            return <h2>{"Component not configured"}</h2>;
-        }
-      }
-    }
+    return (
+      <div className="input-wrapper">
+        <label htmlFor={name}>{name.toUpperCase()}</label>
+        <br />
+        {renderInput()}
+      </div>
+    );
   }
 }
+
+Input.defaultProps = {
+  placeholder: "",
+  meta: {},
+};
+
+Input.propTypes = {
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  value: PropTypes.any.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+  meta: PropTypes.shape({
+    data: PropTypes.shape({
+      options: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.any.isRequired,
+          label: PropTypes.string.isRequired,
+        })
+      ),
+    }),
+  }),
+};
 
 export default Input;

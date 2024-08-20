@@ -40,8 +40,10 @@ class Login extends Component {
       console.log("Returned Response from login: ", response);
       if (response.status === 200) {
         // set the loggedIn state and token described in <App />
-        console.log("Recieved JWT token: ", response.data.token);
-        this.props.onChange(response.data.token);
+        console.log("Recieved JWT Access token: ", response.data.accessToken);
+        console.log("Recieved JWT refresh token: ", response.data.refreshToken);
+
+        this.props.onChange(response.data.accessToken);
       }
     } catch (error) {
       console.log("Error Occured", error);
