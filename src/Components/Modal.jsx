@@ -23,6 +23,13 @@ class ModalComponent extends Component {
     super(props);
     this.state = {
       isOpen: false,
+      task_info: {
+        title: "",
+        description: "",
+        dueDate: "",
+        priority: "",
+        status: "",
+      },
     };
   }
 
@@ -32,6 +39,16 @@ class ModalComponent extends Component {
 
   closeModal = () => {
     this.setState({ isOpen: false });
+  };
+
+  handleChange = (name, value) => {
+    this.setState((prevState) => ({
+      task_info: {
+        ...prevState.task_info,
+        [name]: value,
+      },
+    }), () => console.log("Task_info: ", this.state.task_info));
+    
   };
 
   render() {
@@ -50,36 +67,38 @@ class ModalComponent extends Component {
               <h2>SAVE TASK</h2>
               <div className="save-form">
                 <Input
-                  name={"Title"}
+                  name={"title"}
                   type={"text"}
                   onChange={this.handleChange}
                   placeholder={"Enter title of task."}
-                  value={""}
-                  meta={""}
+                  value={this.state.task_info.title}
+                  meta={{}}
                 />
                 <Input
-                  name={"Description"}
+                  name={"description"}
                   type={"textarea"}
                   onChange={this.handleChange}
                   placeholder={"Please Describe Task"}
-                  value={""}
-                  meta={""}
+                  value={this.state.task_info.description}
+                  meta={{}}
                 />
                 <Input
-                  name={"Due Date"}
+                  name={"dueDate"}
                   type={"date"}
                   onChange={this.handleChange}
                   placeholder={'DD/MM/YYYY'}
-                  value={""}
-                  meta={""}
+                  value={this.state.task_info.dueDate}
+                  meta={{}}
                 />
                 <Input
-                  name={"Priority"}
+                  name={"priority"}
                   type={"list"}
                   onChange={this.handleChange}
+                  value={this.state.task_info.priority}
                   meta={{
                     data: {
                       options: [
+                        {value: "Please Select", label: "Please Select"},
                         { value: "medium", label: "Medium" },
                         { value: "low", label: "Low" },
                         { value: "high", label: "High" },
@@ -88,9 +107,10 @@ class ModalComponent extends Component {
                   }}
                 />
                 <Input
-                  name={"Status"}
+                  name={"status"}
                   type={"radio"}
                   onChange={this.handleChange}
+                  value={this.state.task_info.status}
                   meta={{
                     data: {
                       options: [
