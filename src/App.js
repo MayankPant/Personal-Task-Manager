@@ -63,7 +63,7 @@ class App extends Component {
                 path="/home"
                 element={
                   this.state.loggedIn ? (
-                    <Main />
+                    <Main accessToken={this.state.JWTAccessToken} />
                   ) : (
                     <Login onChange={this.onLoginSucessfull} />
                   )

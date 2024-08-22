@@ -3,6 +3,7 @@ import FabButton from "./FabButton";
 import Button from "./Button";
 import "../styles/Modal.css";
 import Input from "./Input";
+import axios from "axios";
 
 const fabButtonStyles = {
   backgroundColor: "#673AB7",
@@ -50,6 +51,28 @@ class ModalComponent extends Component {
     }), () => console.log("Task_info: ", this.state.task_info));
     
   };
+
+  saveTask = async () => {
+      try {
+        const url = process.env.REACT_APP_TASK_MANAGER_BASE_ADDRESS.concat('/api/task');
+        const payload = {
+          "title" : this.state.task_info.title,
+          "description" : this.state.task_info.description,
+          "dueDate": this.state.task_info.dueDate,
+          "priority": this.state.task_info.priority,
+          "status": this.state.task_info.status
+        }
+        const header = {
+          "Authorization" : `Bearer ${this.props.accessToken}`      }
+        var response = await axios.post(url, payload, {
+          headers: header
+        });
+        console.log("Save task api response:", response);
+        response.status === 202 ? this.closeModal()  : alert("Error Occured");
+      } catch (error) {
+        console.log("Error Occured: ", error)
+      }
+  }
 
   render() {
     return (
@@ -114,8 +137,8 @@ class ModalComponent extends Component {
                   meta={{
                     data: {
                       options: [
-                        { value: "Not Started", label: "Not Started" },
-                        { value: "In progress", label: "In progress" },
+                        { value: "Pending", label: "Pending" },
+                        { value: "In progress", label: "In Progress" },
                         { value: "Completed", label: "Completed" },
                       ],
                     },
@@ -132,7 +155,7 @@ class ModalComponent extends Component {
                 </Button>
                 <Button
                   text={"SAVE"}
-                  onClick={this.closeModal}
+                  onClick={this.saveTask}
                   styles={buttonStyles}
                 >
                   Close
