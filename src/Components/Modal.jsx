@@ -4,6 +4,7 @@ import Button from "./Button";
 import "../styles/Modal.css";
 import Input from "./Input";
 import axios from "axios";
+import AccessTokenContext from "../context/AccessTokenContext";
 
 const fabButtonStyles = {
   backgroundColor: "#673AB7",
@@ -20,6 +21,7 @@ const buttonStyles = {
 };
 
 class ModalComponent extends Component {
+  static contextType = AccessTokenContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -53,6 +55,7 @@ class ModalComponent extends Component {
   };
 
   saveTask = async () => {
+    
       try {
         const url = process.env.REACT_APP_TASK_MANAGER_BASE_ADDRESS.concat('/api/task');
         const payload = {
@@ -63,7 +66,7 @@ class ModalComponent extends Component {
           "status": this.state.task_info.status
         }
         const header = {
-          "Authorization" : `Bearer ${this.props.accessToken}`      }
+          "Authorization" : `Bearer ${this.context.accessToken}`      }
         var response = await axios.post(url, payload, {
           headers: header
         });
