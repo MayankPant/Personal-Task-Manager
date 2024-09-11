@@ -3,9 +3,11 @@ import logo from "../assets/resources/logo.svg";
 import Input from "../Components/Input";
 import Button from "../Components/Button";
 import "../styles/Login.css";
-import axios from "axios";
-
+import AccessTokenContext from "../context/AccessTokenContext";
+import { Navigate} from "react-router-dom";
 class Login extends Component {
+  static contextType = AccessTokenContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -13,6 +15,7 @@ class Login extends Component {
         username: "",
         password: "",
       },
+      isLoggedIn: false,
     };
   }
 
@@ -26,31 +29,20 @@ class Login extends Component {
   };
 
   login = async () => {
-    const loginUrl =
-      process.env.REACT_APP_AUTH_BASE_ADDRESS.concat("/api/auth/login");
-    console.log("Login Url: ", loginUrl);
-    console.log("Entered username: ", this.state.login_info.username);
-    console.log("Entered password: ", this.state.login_info.password);
-    const payload = {
-      username: this.state.login_info.username,
-      password: this.state.login_info.password,
-    };
-    try {
-      var response = await axios.post(loginUrl, payload);
-      console.log("Returned Response from login: ", response);
-      if (response.status === 200) {
-        // set the loggedIn state and token described in <App />
-        console.log("Recieved JWT Access token: ", response.data.accessToken);
-        console.log("Recieved JWT refresh token: ", response.data.refreshToken);
-
-        this.props.onChange(response.data.accessToken);
+      const {username, password} = this.state.login_info;
+      const success = await this.context.login(username, password);
+      if(success){
+       this.setState({isLoggedIn: true})
       }
-    } catch (error) {
-      console.log("Error Occured", error);
-    }
+      else{
+        alert("Login Failed");
+      }
   };
 
   render() {
+    if(this.state.isLoggedIn){
+     return <Navigate to="/home" />
+    }
     return (
       <div className="login-container">
         <div className="panel">

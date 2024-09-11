@@ -25,7 +25,7 @@ class Main extends Component {
   render() {
     return (
       <div className="App-main">
-        <Modal fabButtonText={"+"} accessToken = {this.props.accessToken}  />
+        <Modal fabButtonText={"+"}   />
         <div className="cards">
           <Card
             icon={taskCompleted}
