@@ -68,7 +68,7 @@ class Input extends Component {
               value={value}
               onChange={this.handleChange}
               placeholder={placeholder}
-              style={{ height: "100px", width: "100%" }}
+              style={{}}
             />
           );
         default:
@@ -103,7 +103,7 @@ Input.defaultProps = {
 Input.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   meta: PropTypes.shape({

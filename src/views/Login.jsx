@@ -57,7 +57,7 @@ class Login extends Component {
               onChange={this.handleInputChange}
               placeholder={"Enter your usename."}
               value={this.state.login_info.login_username}
-              meta={""}
+              meta={{}}
             />
             <Input
               name={"password"}
@@ -65,7 +65,7 @@ class Login extends Component {
               onChange={this.handleInputChange}
               placeholder={"Enter your password"}
               value={this.state.login_info.login_password}
-              meta={""}
+              meta={{}}
             />
             <Button
               text={"Login"}
