@@ -71,7 +71,31 @@ class ModalComponent extends Component {
           headers: header
         });
         console.log("Save task api response:", response);
-        response.status === 202 ? this.closeModal()  : alert("Error Occured");
+
+
+
+
+
+        if(response.status === 202){
+          this.closeModal();
+        } 
+        else if(response.status === 401){
+          console.log("Access toekn expired")
+          // Access token expirered. Ask auth to refresh access token
+          const url = process.env.REACT_APP_AUTH_BASE_ADDRESS.concat("/api/auth/refresh")
+          response = await axios.post(url);
+          
+          if(response.status === 201){
+            var new_access_token = response.accessToken;
+            console.log("New Access token: ", new_access_token);
+            this.context.accessToken = new_access_token;
+            await this.saveTask();
+          }
+          else if(response.status === 401){
+            // just go back to login page
+            this.setState({isAuthorised: false})
+          }
+        }
       } catch (error) {
         console.log("Error Occured: ", error)
       }

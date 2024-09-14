@@ -22,6 +22,8 @@ input {
 }
 input:focus {
   border-color: #673ab7;
+  color: #673ab7;
+  font-weight: 500;
   outline: none;
   box-shadow: 0 0 5px #673ab7;
 }
@@ -58,6 +60,8 @@ select{
 }
 select:focus {
   border-color: #673ab7;
+  color: #673ab7;
+  font-weight: 500;
   outline: none;
   box-shadow: 0 0 5px #673ab7;
 }
@@ -147,5 +151,7 @@ textarea:focus {
   border-color: #673ab7;
   outline: none;
   box-shadow: 0 0 5px #673ab7;
+  color: #673ab7;
+  font-weight: 500;
 }
 
