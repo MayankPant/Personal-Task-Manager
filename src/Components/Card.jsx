@@ -19,15 +19,18 @@ class Card extends Component{
         }
     }
 
+    
+
     render() {
+        const { icon, title, number, subtitle } = this.props;
         return (
             <div className="card-wrapper">
                 <div className="icon">
-                <img src={this.state.icon} alt="card"></img>
+                <img src={icon} alt="card"></img>
                 </div>
-                <label className="title">{this.state.title.toUpperCase()}</label>
-                <label className="number">{this.state.number}</label>
-                <label className="subtitle">{this.state.subtitle.toUpperCase()}</label>
+                <label className="title">{title.toUpperCase()}</label>
+                <label className="number">{number}</label>
+                <label className="subtitle">{subtitle.toUpperCase()}</label>
             </div>
         )
     }
