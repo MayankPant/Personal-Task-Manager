@@ -89,10 +89,10 @@ class Main extends Component {
             this.state.five_urgent_tasks.map((task, index) => (
               <ListItem
                 key={index}
-                taskName={task.title} 
-                dueDate={task.due_date} 
-                priority={task.priority} 
-                status={task.status} 
+                taskName={task.title}
+                dueDate={task.due_date}
+                priority={task.priority}
+                status={task.status}
                 assignedTo={task.assigned_to}
               />
             ))

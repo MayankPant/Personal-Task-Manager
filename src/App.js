@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -10,7 +10,6 @@ import Main from "./views/Main.jsx";
 import Header from "./views/Header.jsx";
 import TaskList from "./Components/TaskList.jsx";
 import Login from "./views/Login.jsx";
-import AuthProvider from "./Components/AuthProvider.jsx";
 import AccessTokenContext from "./context/AccessTokenContext.js";
 import { useContext } from "react";
 
