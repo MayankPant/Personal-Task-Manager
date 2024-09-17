@@ -82,12 +82,15 @@ class TaskList extends React.Component {
   }
 
   formatDate(date) {
-    return new Date(date).toLocaleDateString("en-US", {
+    console.log("Date to be formatted: ", date);
+    const dateObj = date instanceof Date ? date : new Date(date);
+    return dateObj.toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
       day: "numeric",
     });
   }
+  
 
   getPriorityColor(priority) {
     switch (priority.toLowerCase()) {
@@ -205,7 +208,7 @@ class TaskList extends React.Component {
                 </td>
                 <td>{task.title}</td>
                 <td>{this.truncateText(task.description, 30)}</td>
-                <td>{this.formatDate(task.dueDate)}</td>
+                <td>{this.formatDate(task.due_date)}</td>
                 <td>
                   <Chip
                     label={task.priority}
