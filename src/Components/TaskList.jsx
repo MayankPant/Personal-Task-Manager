@@ -11,10 +11,11 @@ import "../styles/TaskList.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import AccessTokenContext from "../context/AccessTokenContext";
+import DownloadJSON from "./DownloadJSON";
 
 const ITEM_RANGE = 10;
 
-const TableFooter = ({ currentPage, itemsRange, totalItems, changePage }) => {
+const TableFooter = ({tasks, currentPage, itemsRange, totalItems, changePage, downloadFile }) => {
   return (
     <div className="table-footer">
       <div className="pagination-controls">
@@ -31,9 +32,7 @@ const TableFooter = ({ currentPage, itemsRange, totalItems, changePage }) => {
       <div className="page-info">
         <input type="text" value={`Page: ${currentPage}`} readOnly />
       </div>
-      <button aria-label="Download" style={{backgroundColor: '#673ab7', border:'0px'}} onClick={() => this.downloadFile}>
-        <FileDownload sx={{color: '#eee25b', backgroundColor: '#673ab7', padding: 0}}/>
-      </button>
+      <DownloadJSON data={tasks} filename={"task"} icon= {<FileDownload sx={{color: '#eee25b', backgroundColor: '#673ab7', padding: 0}}/>} />
     </div>
   );
 };
@@ -232,6 +231,7 @@ class TaskList extends React.Component {
           </tbody>
         </table>
         <TableFooter
+          tasks={this.state.tasks}
           currentPage={Math.ceil(this.state.leftPointer / totalItems)}
           totalPages={totalPages}
           itemsRange={this.state.rightPointer - this.state.leftPointer}
