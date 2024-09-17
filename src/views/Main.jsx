@@ -23,7 +23,9 @@ class Main extends Component {
   }
   componentDidMount = async () => {
     const url =
-      process.env.REACT_APP_TASK_MANAGER_BASE_ADDRESS.concat("/api/analytics/3/");
+      process.env.REACT_APP_TASK_MANAGER_BASE_ADDRESS.concat(
+        "/api/analytics/3/"
+      );
     const header = {
       Authorization: `Bearer ${this.context.accessToken}`,
     };
@@ -44,7 +46,7 @@ class Main extends Component {
           total_tasks: total_tasks,
           pending_tasks: pending_tasks,
           completed_tasks: completed_tasks,
-          five_urgent_tasks: [ ...five_urgent_tasks ],
+          five_urgent_tasks: [...five_urgent_tasks],
         },
         () => {
           console.log(this.state);
@@ -52,7 +54,6 @@ class Main extends Component {
       );
     }
   };
-
 
   closeModal = () => {
     this.setState({ active: false });

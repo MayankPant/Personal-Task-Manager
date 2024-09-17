@@ -1,13 +1,18 @@
 import React from "react";
 import { Checkbox, Chip, IconButton } from "@mui/material";
-import { Edit as EditIcon, Delete as DeleteIcon, ArrowForwardIos as ArrowForward, ArrowBackIos as ArrowBack, FileDownload } from "@mui/icons-material";
+import {
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  ArrowForwardIos as ArrowForward,
+  ArrowBackIos as ArrowBack,
+  FileDownload,
+} from "@mui/icons-material";
 import "../styles/TaskList.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import AccessTokenContext from "../context/AccessTokenContext";
 const TableFooter = ({
   currentPage,
-  totalPages,
   itemsRange,
   totalItems,
   onPageChange,
@@ -15,16 +20,22 @@ const TableFooter = ({
   return (
     <div className="table-footer">
       <div className="pagination-controls">
-        <button onClick={() => onPageChange("prev")}><ArrowBack/></button>
+        <button onClick={() => onPageChange("prev")}>
+          <ArrowBack />
+        </button>
         <span>
           {itemsRange} of {totalItems}
         </span>
-        <button onClick={() => onPageChange("next")}><ArrowForward/></button>
+        <button onClick={() => onPageChange("next")}>
+          <ArrowForward />
+        </button>
       </div>
       <div className="page-info">
         <input type="text" value={`${currentPage}`} readOnly />
       </div>
-      <button onClick={() => onPageChange("next")}><FileDownload/></button>
+      <button onClick={() => onPageChange("next")}>
+        <FileDownload />
+      </button>
     </div>
   );
 };
@@ -34,7 +45,7 @@ class TaskList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: []
+      tasks: [],
     };
   }
 
@@ -53,12 +64,11 @@ class TaskList extends React.Component {
     if (response.status === 207) {
       const fetched_data = response.data;
       console.log("Fetched All Data: ", fetched_data);
-      const {five_urgent_tasks } =
-        fetched_data;
+      const { five_urgent_tasks } = fetched_data;
 
       this.setState(
         {
-          tasks: [...five_urgent_tasks]
+          tasks: [...five_urgent_tasks],
         },
         () => {
           console.log(this.state);
@@ -179,13 +189,14 @@ class TaskList extends React.Component {
             ))}
           </tbody>
         </table>
-        <TableFooter  currentPage={5}
-        totalPages={5}
-        itemsRange={10}
-        totalItems={10}
-        onPageChange={10}  />
+        <TableFooter
+          currentPage={5}
+          totalPages={5}
+          itemsRange={10}
+          totalItems={10}
+          onPageChange={10}
+        />
       </div>
-      
     );
   }
 }

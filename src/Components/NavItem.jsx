@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/NavItem.css";
 
-
 class NavItem extends Component {
   constructor(props) {
     super(props);
@@ -34,13 +33,12 @@ class NavItem extends Component {
       alignItems: "center",
       textDecoration: "none",
       fontVariantCaps: "all-petite-caps",
-      
     };
 
     const passedStyling = this.props.styles;
     // Styles for hover effect
     const hoverStyles = {
-      boxShadow: this.state.isHovered ? "0px 0px 5px #000000": ''
+      boxShadow: this.state.isHovered ? "0px 0px 5px #000000" : "",
     };
 
     const combinedStyles = {
@@ -50,16 +48,14 @@ class NavItem extends Component {
     };
 
     return (
-      
-        <div
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
-        >
-          <NavLink to={this.props.routeTo} style={combinedStyles}>
-            {this.props.navItemName}
-          </NavLink>
-        </div>
-      
+      <div
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
+        <NavLink to={this.props.routeTo} style={combinedStyles}>
+          {this.props.navItemName}
+        </NavLink>
+      </div>
     );
   }
 }

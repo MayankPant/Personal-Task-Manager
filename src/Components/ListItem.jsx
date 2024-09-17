@@ -62,7 +62,10 @@ class ListItem extends Component {
         onMouseLeave={this.handleMouseLeave}
       >
         <div className="task-details">
-            <div className="task-icon"> <FaTasks  /></div>
+          <div className="task-icon">
+            {" "}
+            <FaTasks />
+          </div>
           <div>
             <strong className="task-name">{taskName}</strong>
             <p className="task-info">

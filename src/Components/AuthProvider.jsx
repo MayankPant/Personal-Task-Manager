@@ -62,7 +62,6 @@ class AuthProvider extends Component {
     const { children } = this.props;
     const { login, logout } = this;
 
-    
     if (isLoading) {
       return <div>Loading....</div>;
     }

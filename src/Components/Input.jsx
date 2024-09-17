@@ -37,15 +37,14 @@ class Input extends Component {
               <label htmlFor={option.label}>
                 {option.label}
                 <input
-                type="radio"
-                id={option.value}
-                name={name}
-                value={option.value}
-                onChange={this.handleChange}
-                checked={this.props.value === option.value}
-              />
+                  type="radio"
+                  id={option.value}
+                  name={name}
+                  value={option.value}
+                  onChange={this.handleChange}
+                  checked={this.props.value === option.value}
+                />
               </label>
-              
             </div>
           ));
         case "checkbox":

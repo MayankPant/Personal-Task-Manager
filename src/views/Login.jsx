@@ -4,7 +4,7 @@ import Input from "../Components/Input";
 import Button from "../Components/Button";
 import "../styles/Login.css";
 import AccessTokenContext from "../context/AccessTokenContext";
-import { Navigate} from "react-router-dom";
+import { Navigate } from "react-router-dom";
 class Login extends Component {
   static contextType = AccessTokenContext;
 
@@ -29,19 +29,18 @@ class Login extends Component {
   };
 
   login = async () => {
-      const {username, password} = this.state.login_info;
-      const success = await this.context.login(username, password);
-      if(success){
-       this.setState({isLoggedIn: true})
-      }
-      else{
-        alert("Login Failed");
-      }
+    const { username, password } = this.state.login_info;
+    const success = await this.context.login(username, password);
+    if (success) {
+      this.setState({ isLoggedIn: true });
+    } else {
+      alert("Login Failed");
+    }
   };
 
   render() {
-    if(this.state.isLoggedIn){
-     return <Navigate to="/home" />
+    if (this.state.isLoggedIn) {
+      return <Navigate to="/home" />;
     }
     return (
       <div className="login-container">
