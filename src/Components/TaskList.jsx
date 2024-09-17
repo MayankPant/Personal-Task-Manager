@@ -19,20 +19,20 @@ const TableFooter = ({ currentPage, itemsRange, totalItems, changePage }) => {
     <div className="table-footer">
       <div className="pagination-controls">
         <button onClick={() => changePage("prev", totalItems)}>
-          <ArrowBack />
+          <ArrowBack sx={{color: '#eee25b'}} />
         </button>
         <span>
           {itemsRange} of {totalItems}
         </span>
         <button onClick={() => changePage("next", totalItems)}>
-          <ArrowForward />
+          <ArrowForward sx={{color: '#eee25b'}}/>
         </button>
       </div>
       <div className="page-info">
-        <input type="text" value={`${currentPage}`} readOnly />
+        <input type="text" value={`Page: ${currentPage}`} readOnly />
       </div>
-      <button onClick={() => this.downloadFile}>
-        <FileDownload />
+      <button aria-label="Download" style={{backgroundColor: '#673ab7', border:'0px'}} onClick={() => this.downloadFile}>
+        <FileDownload sx={{color: '#eee25b', backgroundColor: '#673ab7', padding: 0}}/>
       </button>
     </div>
   );

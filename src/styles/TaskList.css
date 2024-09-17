@@ -80,6 +80,7 @@ tbody tr:first-child:hover {
     border: none;
     background: none;
     font-size: 1.2em;
+    color: #eee25b;
     text-align: center;
   }
   
