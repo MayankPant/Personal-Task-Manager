@@ -23,7 +23,7 @@ class Main extends Component {
   }
   componentDidMount = async () => {
     const url =
-      process.env.REACT_APP_TASK_MANAGER_BASE_ADDRESS.concat("/api/analytics");
+      process.env.REACT_APP_TASK_MANAGER_BASE_ADDRESS.concat("/api/analytics/3/");
     const header = {
       Authorization: `Bearer ${this.context.accessToken}`,
     };
@@ -52,6 +52,7 @@ class Main extends Component {
       );
     }
   };
+
 
   closeModal = () => {
     this.setState({ active: false });
