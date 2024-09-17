@@ -40,6 +40,7 @@ class Button extends Component {
       ...styles,
       ...(this.state.isHovered ? hoverStyles : {}),
     };
+    const display = this.props.text === undefined ? this.props.icon : this.props.text;
     return (
       <div className="button-wrapper">
         <button
@@ -48,7 +49,7 @@ class Button extends Component {
           onClick={this.props.onClick}
           style={combinedStyles}
         >
-          {this.props.text.toUpperCase()}{" "}
+          {display}
         </button>
       </div>
     );
