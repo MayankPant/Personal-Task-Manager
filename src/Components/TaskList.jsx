@@ -3,7 +3,8 @@ import { Checkbox, Chip, IconButton } from "@mui/material";
 import { Edit as EditIcon, Delete as DeleteIcon, ArrowForwardIos as ArrowForward, ArrowBackIos as ArrowBack, FileDownload } from "@mui/icons-material";
 import "../styles/TaskList.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import axios from "axios";
+import AccessTokenContext from "../context/AccessTokenContext";
 const TableFooter = ({
   currentPage,
   totalPages,
@@ -29,9 +30,42 @@ const TableFooter = ({
 };
 
 class TaskList extends React.Component {
+  static contextType = AccessTokenContext;
   constructor(props) {
     super(props);
+    this.state = {
+      tasks: []
+    };
   }
+
+  componentDidMount = async () => {
+    const url =
+      process.env.REACT_APP_TASK_MANAGER_BASE_ADDRESS.concat("/api/analytics/");
+    const header = {
+      Authorization: `Bearer ${this.context.accessToken}`,
+    };
+    var response = await axios.get(url, {
+      headers: header,
+    });
+
+    console.log("Initial All data fetched: ", response);
+
+    if (response.status === 207) {
+      const fetched_data = response.data;
+      console.log("Fetched All Data: ", fetched_data);
+      const {five_urgent_tasks } =
+        fetched_data;
+
+      this.setState(
+        {
+          tasks: [...five_urgent_tasks]
+        },
+        () => {
+          console.log(this.state);
+        }
+      );
+    }
+  };
 
   truncateText(text, maxLength) {
     if (text.length <= maxLength) return text;
@@ -73,7 +107,7 @@ class TaskList extends React.Component {
   }
 
   render() {
-    const { tasks } = this.props;
+    const { tasks } = this.state;
 
     const theme = createTheme({
       components: {
@@ -113,8 +147,8 @@ class TaskList extends React.Component {
             <tr className="spacer-row">
               <td colSpan={7}></td>
             </tr>
-            {tasks.map((task) => (
-              <tr key={task.id}>
+            {tasks.map((task, index) => (
+              <tr key={index}>
                 <td>
                   <Checkbox />
                 </td>
