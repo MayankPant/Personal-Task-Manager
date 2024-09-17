@@ -11,29 +11,27 @@ import "../styles/TaskList.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import AccessTokenContext from "../context/AccessTokenContext";
-const TableFooter = ({
-  currentPage,
-  itemsRange,
-  totalItems,
-  onPageChange,
-}) => {
+
+const ITEM_RANGE = 10;
+
+const TableFooter = ({ currentPage, itemsRange, totalItems, changePage }) => {
   return (
     <div className="table-footer">
       <div className="pagination-controls">
-        <button onClick={() => onPageChange("prev")}>
+        <button onClick={() => changePage("prev", totalItems)}>
           <ArrowBack />
         </button>
         <span>
           {itemsRange} of {totalItems}
         </span>
-        <button onClick={() => onPageChange("next")}>
+        <button onClick={() => changePage("next", totalItems)}>
           <ArrowForward />
         </button>
       </div>
       <div className="page-info">
         <input type="text" value={`${currentPage}`} readOnly />
       </div>
-      <button onClick={() => onPageChange("next")}>
+      <button onClick={() => this.downloadFile}>
         <FileDownload />
       </button>
     </div>
@@ -46,6 +44,8 @@ class TaskList extends React.Component {
     super(props);
     this.state = {
       tasks: [],
+      leftPointer: 0,
+      rightPointer: ITEM_RANGE,
     };
   }
 
@@ -115,9 +115,51 @@ class TaskList extends React.Component {
         return "default";
     }
   }
+  changePage = (direction, totalItems) => {
+    if (direction !== "next" && direction !== "prev") {
+      console.log("Wrong parameter in change page");
+      return;
+    }
+
+    if (direction === "next") {
+      const newLeft =
+        this.state.rightPointer !== totalItems
+          ? this.state.rightPointer
+          : this.state.leftPointer;
+      console.log("LEFTPOINTER: ", newLeft);
+      const newRight =
+        this.state.rightPointer + ITEM_RANGE > totalItems
+          ? totalItems
+          : (this.state.rightPointer + ITEM_RANGE) % totalItems;
+      console.log("RIGHT POINTER: ", newRight);
+      this.setState({
+        leftPointer: newLeft,
+        rightPointer: newRight,
+      });
+    } else if (direction === "prev") {
+      const newRight =
+        this.state.leftPointer <= 0 ? ITEM_RANGE : this.state.leftPointer;
+      console.log("RIGHT POINTER: ", newRight);
+      const newLeft =
+        this.state.leftPointer - ITEM_RANGE < 0
+          ? 0
+          : (this.state.leftPointer - ITEM_RANGE) % totalItems;
+      console.log("LEFT POINTER: ", newLeft);
+      this.setState({
+        leftPointer: newLeft,
+        rightPointer: newRight,
+      });
+    }
+  };
 
   render() {
-    const { tasks } = this.state;
+    const totalItems = this.state.tasks.length;
+    const tasks = this.state.tasks.slice(
+      this.state.leftPointer,
+      this.state.rightPointer
+    );
+
+    const totalPages = Math.ceil(totalItems / 10); // assuming 10 rows for each page
 
     const theme = createTheme({
       components: {
@@ -190,11 +232,11 @@ class TaskList extends React.Component {
           </tbody>
         </table>
         <TableFooter
-          currentPage={5}
-          totalPages={5}
-          itemsRange={10}
-          totalItems={10}
-          onPageChange={10}
+          currentPage={Math.ceil(this.state.leftPointer / totalItems)}
+          totalPages={totalPages}
+          itemsRange={this.state.rightPointer - this.state.leftPointer}
+          totalItems={totalItems}
+          changePage={this.changePage}
         />
       </div>
     );
