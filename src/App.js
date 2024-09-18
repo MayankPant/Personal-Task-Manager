@@ -8,12 +8,10 @@ import {
 } from "react-router-dom";
 import Main from "./views/Main.jsx";
 import Header from "./views/Header.jsx";
-import TaskList from "./Components/TaskList.jsx";
 import Login from "./views/Login.jsx";
 import AccessTokenContext from "./context/AccessTokenContext.js";
 import { useContext } from "react";
-
-import dummyTasks from "./DummyTasks.js";
+import SearchableTable from "./Components/SearchableTable.jsx";
 
 // Private route component
 const PrivateRoute = ({ children }) => {
@@ -47,7 +45,7 @@ function App() {
               path="tasklist"
               element={
                 <PrivateRoute>
-                  <TaskList tasks={dummyTasks} />
+                  <SearchableTable />
                 </PrivateRoute>
               }
             />

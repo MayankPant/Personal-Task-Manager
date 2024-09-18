@@ -9,7 +9,6 @@ import {
 } from "@mui/icons-material";
 import "../styles/TaskList.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import axios from "axios";
 import AccessTokenContext from "../context/AccessTokenContext";
 import DownloadJSON from "./DownloadJSON";
 
@@ -42,39 +41,12 @@ class TaskList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: [],
       leftPointer: 0,
       rightPointer: ITEM_RANGE,
     };
   }
 
-  componentDidMount = async () => {
-    const url =
-      process.env.REACT_APP_TASK_MANAGER_BASE_ADDRESS.concat("/api/analytics/");
-    const header = {
-      Authorization: `Bearer ${this.context.accessToken}`,
-    };
-    var response = await axios.get(url, {
-      headers: header,
-    });
-
-    console.log("Initial All data fetched: ", response);
-
-    if (response.status === 207) {
-      const fetched_data = response.data;
-      console.log("Fetched All Data: ", fetched_data);
-      const { five_urgent_tasks } = fetched_data;
-
-      this.setState(
-        {
-          tasks: [...five_urgent_tasks],
-        },
-        () => {
-          console.log(this.state);
-        }
-      );
-    }
-  };
+  
 
   truncateText(text, maxLength) {
     if (text.length <= maxLength) return text;
@@ -82,7 +54,7 @@ class TaskList extends React.Component {
   }
 
   formatDate(date) {
-    console.log("Date to be formatted: ", date);
+
     const dateObj = date instanceof Date ? date : new Date(date);
     return dateObj.toLocaleDateString("en-US", {
       year: "numeric",
@@ -155,8 +127,9 @@ class TaskList extends React.Component {
   };
 
   render() {
-    const totalItems = this.state.tasks.length;
-    const tasks = this.state.tasks.slice(
+    const data = this.props.data();
+    const totalItems = data.length;
+    const tasks = data.slice(
       this.state.leftPointer,
       this.state.rightPointer
     );

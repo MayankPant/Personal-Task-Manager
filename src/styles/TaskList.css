@@ -3,11 +3,11 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 100px;
+  width: 100%;
 }
 
 table {
-  width: 90%;
+  width: inherit;
   border-collapse: separate;
   border-spacing: 0px 3px; /* Space between rows */
 }
@@ -16,10 +16,6 @@ thead {
   top: 0px;
   z-index: 1;
   border-spacing: 0 30px;
-}
-.spacer-row td {
-  height: 40px; /* Additional space if needed */
-  background-color: #c5aeee;
 }
 
 th {
@@ -49,49 +45,48 @@ tbody tr:first-child:hover {
 }
 
 .table-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #673ab7;
-    border-top: 1px solid #673ab7;
-    width: 88.5%;
-    margin-top: 10px;
-    color: #eee25b;
-    font-weight: bold;
-  }
-  
-  .pagination-controls {
-    display: flex;
-    align-items: center;
-  }
-  
-  .pagination-controls button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: none;
-    border: none;
-    font-size: 1.5em;
-    cursor: pointer;
-  }
-  .pagination-controls button:hover{
-    border-radius: 5px;
-    cursor: "pointer";
-    transition: "box-shadow 0.3s";
-    box-shadow: 0px 0px 5px #000000;
-  }
-  
-  .pagination-controls span {
-    margin: 0 10px;
-  }
-  
-  .page-info input {
-    border: none;
-    background: none;
-    font-size: 1.2em;
-    color: #eee25b;
-    text-align: center;
-    font-weight: bold;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #673ab7;
+  border-top: 1px solid #673ab7;
+  width: inherit;
+  margin-top: 10px;
+  color: #eee25b;
+  font-weight: bold;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-controls button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+.pagination-controls button:hover {
+  border-radius: 5px;
+  cursor: "pointer";
+  transition: "box-shadow 0.3s";
+  box-shadow: 0px 0px 5px #000000;
+}
+
+.pagination-controls span {
+  margin: 0 10px;
+}
+
+.page-info input {
+  border: none;
+  background: none;
+  font-size: 1.2em;
+  color: #eee25b;
+  text-align: center;
+  font-weight: bold;
+}
