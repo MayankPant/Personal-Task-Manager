@@ -11,6 +11,7 @@ import "../styles/TaskList.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AccessTokenContext from "../context/AccessTokenContext";
 import DownloadJSON from "./DownloadJSON";
+import GenericModal from "./GenericModal";
 
 const ITEM_RANGE = 10;
 
@@ -43,6 +44,11 @@ class TaskList extends React.Component {
     this.state = {
       leftPointer: 0,
       rightPointer: ITEM_RANGE,
+      formData: {
+        formFields: [],
+        formButtons: []
+      },
+      isEditing: false
     };
   }
 
@@ -126,7 +132,98 @@ class TaskList extends React.Component {
     }
   };
 
+  closeModal = () => this.setState({isEditing: false});
+  sendEditRequest = () => console.log("Edit request sent");
+
+  editTask = (index) => {
+    console.log("Task index to be edited: ", index);
+    const taskToEdit = this.props.data()[index];
+    console.log("Task to be edited: ", taskToEdit);
+    const formFields =  [
+      {
+        name: "title",
+        type: 'text',
+        placeholder: 'Enter title of task.',
+        value: taskToEdit.title,
+        meta: {}
+      },
+      {
+        name:"description",
+        type:"textarea",
+        placeholder:"Please Describe Task",
+        value:taskToEdit.description,
+        meta:{}
+      },
+      {
+        name:"dueDate",
+        type:"date",
+        placeholder:'DD/MM/YYYY',
+        value:taskToEdit.due_date,
+        meta:{}
+      },
+     {
+      name:"priority",
+      type:"list",
+      value:{
+        value: taskToEdit.priority.toLowerCase(),
+        label: taskToEdit.priority
+      },
+      meta:{
+        data: {
+          options: [
+            { value: "Please Select", label: "Please Select"},
+            { value: "medium", label: "Medium" },
+            { value: "low", label: "Low" },
+            { value: "high", label: "High" },
+          ],
+        },
+      }},
+      {
+        name:"status",
+        type:"radio",
+        value:taskToEdit.status,
+        meta:{
+          data: {
+            options: [
+              { value: "Pending", label: "Pending" },
+              { value: "In progress", label: "In Progress" },
+              { value: "Completed", label: "Completed" },
+            ],
+          },
+        }
+      }
+    ]
+
+    const buttonFields = [
+      {
+        text: "EDIT",
+        onClick: () => {
+          this.sendEditRequest(taskToEdit)
+        },
+        styles: {}
+
+      },
+      {
+        text: "CLOSE",
+        onClick: () => {this.closeModal()},
+        styles: {}
+      }
+    ]
+
+    this.setState((prevState) => ({
+      formData: {
+        ...prevState.formData,
+        formFields: formFields,
+        formButtons: buttonFields,
+        
+      },
+      isEditing: true
+    }), () => console.log("Current state of task list state:", this.state));
+      
+  }
+
   render() {
+    console.log("Form Data: ", this.state.formData);
     const data = this.props.data();
     const totalItems = data.length;
     const tasks = data.slice(
@@ -151,8 +248,11 @@ class TaskList extends React.Component {
       },
     });
 
-    return (
+    
+
+    return ( 
       <div className="table-container">
+        {   this.state.isEditing && <GenericModal formFields = {this.state.formData.formFields} buttonFields={this.state.formData.formButtons} />      }
         <table aria-label="task list">
           <thead>
             <tr className="table-header">
@@ -190,15 +290,15 @@ class TaskList extends React.Component {
                 </td>
                 <td>
                   <Chip
-                    label={task.status}
+                    label={task.status} 
                     color={this.getStatusColor(task.status)}
                   />
                 </td>
                 <td>
-                  <IconButton aria-label="edit">
+                  <IconButton aria-label="edit" onClick={() => this.editTask(index)}>
                     <EditIcon />
                   </IconButton>
-                  <IconButton aria-label="delete">
+                  <IconButton aria-label="delete" onClick={() => this.deleteTask(index)}>
                     <DeleteIcon />
                   </IconButton>
                 </td>

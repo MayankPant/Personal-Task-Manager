@@ -18,12 +18,13 @@ class Input extends Component {
 
   render() {
     const { name, type, placeholder, value, meta } = this.props;
+    console.log("Input component props: ", this.props);
 
     const renderInput = () => {
       switch (type) {
         case "list":
           return (
-            <select name={name} value={value} onChange={this.handleChange}>
+            <select name={name} defaultValue={value} onChange={this.handleChange}>
               {meta.data.options.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
