@@ -48,7 +48,8 @@ class TaskList extends React.Component {
         formFields: [],
         formButtons: []
       },
-      isEditing: false
+      isEditing: false,
+      taskIndex: -1
     };
   }
 
@@ -171,7 +172,6 @@ class TaskList extends React.Component {
       meta:{
         data: {
           options: [
-            { value: "Please Select", label: "Please Select"},
             { value: "medium", label: "Medium" },
             { value: "low", label: "Low" },
             { value: "high", label: "High" },
@@ -217,7 +217,8 @@ class TaskList extends React.Component {
         formButtons: buttonFields,
         
       },
-      isEditing: true
+      isEditing: true,
+      taskIndex: index
     }), () => console.log("Current state of task list state:", this.state));
       
   }
@@ -252,7 +253,8 @@ class TaskList extends React.Component {
 
     return ( 
       <div className="table-container">
-        {   this.state.isEditing && <GenericModal formFields = {this.state.formData.formFields} buttonFields={this.state.formData.formButtons} />      }
+        {/* using the key to enure a new instance of GenericModal is created each time we click on edit */}
+        {   this.state.isEditing && <GenericModal key={`edit-task-${this.state.taskIndex}`} formFields = {this.state.formData.formFields} buttonFields={this.state.formData.formButtons} />      }
         <table aria-label="task list">
           <thead>
             <tr className="table-header">

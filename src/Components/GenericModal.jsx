@@ -19,22 +19,33 @@ class GenericModal extends Component {
     
     this.state = {
       isOpen: true,
+      isInitialized: false,
       formData: {}
     };
   }
   componentDidMount() {
-    console.log("Initial Form Fields to set: ", this.props.formFields);
-    this.setFormFields(this.props.formFields);
+    this.initializeFormData();
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.formFields !== prevProps.formFields) {
+      console.log("Form fields changed, reinitializing");
+      this.initializeFormData();
+    }
   }
 
   handleChange = (name, value) => {
-    this.setState((prevState) => ({
+    console.log(`Handling change for ${name}:`, value);
+    this.setState(prevState => ({
       formData: {
         ...prevState.formData,
         [name]: value,
-      },
-    }), () => console.log("Form Data: ", this.state.formData));
-    
+      }
+    }), () => {
+      console.log("Updated form data:", this.state.formData);
+      if (this.props.onChange) {
+        this.props.onChange(this.state.formData);
+      }
+    });
   };
 
   openModal = () => {
@@ -42,7 +53,7 @@ class GenericModal extends Component {
   };
 
   closeModal = () => {
-    this.setState({ isOpen: false });
+    this.setState({ isOpen: false, isInitialized: false });
   };
 
   
@@ -53,19 +64,19 @@ class GenericModal extends Component {
 
   }
 
-  setFormFields = (fields) => {
-    fields.forEach(field => {
-      this.setState((prevState) => ({
-        formData: {
-          ...prevState.formData,
-          [field.name]: field.value
-        }
-      }), () => {
-        // Logging state after it has been updated
-        console.log("State after setting form fields: ", this.state);
+  initializeFormData = () => {
+    if(!this.state.isInitialized){
+      const formData = {};
+      this.props.formFields.forEach(field => {
+        formData[field.name] = field.value;
+        console.log(`Initializing ${field.name}:`, field.value);
       });
-    });
-  };
+      this.setState({ formData, isInitialized: true }, () => {
+        console.log("Initialized form data:", this.state.formData);
+      });
+    }
+  }
+
   
 
   renderformFields = () => {

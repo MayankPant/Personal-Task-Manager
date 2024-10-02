@@ -5,12 +5,19 @@ import "../styles/Input.css";
 class Input extends Component {
   handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
-    const { onChange } = this.props;
+    const { onChange, meta } = this.props;
 
     if (type === "checkbox") {
       onChange(name, checked);
     } else if (type === "file") {
       onChange(name, files[0]);
+    }
+    else if(type ==='select-one'){
+     // Find the selected option based on its value
+    const selectedOption = meta.data.options.find(option => option.value === value);
+
+    // Pass both the value and label to the onChange handler
+    onChange(name, { value: selectedOption.value, label: selectedOption.label });
     } else {
       onChange(name, value);
     }
@@ -23,9 +30,12 @@ class Input extends Component {
     const renderInput = () => {
       switch (type) {
         case "list":
+          const selectValue = value && typeof(value) === 'object' ? value.value : value || "";
+          console.log(`Rendering select for ${name}:`, { selectValue, value });
+
           return (
-            <select name={name} defaultValue={value} onChange={this.handleChange}>
-              {meta.data.options.map((option) => (
+            <select name={name}  value={selectValue}  onChange={this.handleChange}>
+              {meta.data?.options.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -33,7 +43,7 @@ class Input extends Component {
             </select>
           );
         case "radio":
-          return meta.data.options.map((option) => (
+          return meta.data?.options.map((option) => (
             <div key={option.value} className="radio">
               <label htmlFor={option.label}>
                 {option.label}
@@ -49,7 +59,7 @@ class Input extends Component {
             </div>
           ));
         case "checkbox":
-          return meta.data.options.map((option) => (
+          return meta.data?.options.map((option) => (
             <div key={option.value} className="checkbox">
               <label htmlFor={option.value}>{option.label}</label>
               <input
@@ -98,6 +108,7 @@ class Input extends Component {
 Input.defaultProps = {
   placeholder: "",
   meta: {},
+  value: ""
 };
 
 Input.propTypes = {
