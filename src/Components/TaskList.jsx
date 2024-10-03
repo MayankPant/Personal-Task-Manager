@@ -43,8 +43,7 @@ class TaskList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      leftPointer: 0,
-      rightPointer: ITEM_RANGE,
+      currentPage: 1,
       formData: {
         formFields: [],
         formButtons: []
@@ -102,35 +101,11 @@ class TaskList extends React.Component {
       console.log("Wrong parameter in change page");
       return;
     }
-
+    const totalPages = Math.ceil(totalItems/ITEM_RANGE);
     if (direction === "next") {
-      const newLeft =
-        this.state.rightPointer !== totalItems
-          ? this.state.rightPointer
-          : this.state.leftPointer;
-      console.log("LEFTPOINTER: ", newLeft);
-      const newRight =
-        this.state.rightPointer + ITEM_RANGE > totalItems
-          ? totalItems
-          : (this.state.rightPointer + ITEM_RANGE);
-      console.log("RIGHT POINTER: ", newRight);
-      this.setState({
-        leftPointer: newLeft,
-        rightPointer: newRight,
-      });
+      this.setState({currentPage: Math.min(totalPages, this.state.currentPage + 1)});
     } else if (direction === "prev") {
-      const newRight =
-        this.state.leftPointer <= 0 ? ITEM_RANGE : this.state.leftPointer;
-      console.log("RIGHT POINTER: ", newRight);
-      const newLeft =
-        this.state.leftPointer - ITEM_RANGE < 0
-          ? 0
-          : (this.state.leftPointer - ITEM_RANGE) % totalItems;
-      console.log("LEFT POINTER: ", newLeft);
-      this.setState({
-        leftPointer: newLeft,
-        rightPointer: newRight,
-      });
+      this.setState({currentPage: Math.max(1, this.state.currentPage - 1)});
     }
   };
 
@@ -247,9 +222,11 @@ class TaskList extends React.Component {
     console.log("Form Data: ", this.state.formData);
     const data = this.props.data();
     const totalItems = data.length;
+    const startIndex = (this.state.currentPage - 1) * ITEM_RANGE + 1;
+    const endIndex = Math.min(this.state.currentPage * ITEM_RANGE, totalItems);
     const tasks = data.slice(
-      this.state.leftPointer,
-      this.state.rightPointer
+      startIndex,
+      endIndex
     );
 
     const totalPages = Math.ceil(totalItems / 10); // assuming 10 rows for each page
@@ -330,9 +307,9 @@ class TaskList extends React.Component {
         </table>
         <TableFooter
           tasks={this.state.tasks}
-          currentPage={Math.ceil(this.state.leftPointer / totalItems)}
+          currentPage={this.state.currentPage}
           totalPages={totalPages}
-          itemsRange={this.state.rightPointer - this.state.leftPointer}
+          itemsRange={ITEM_RANGE}
           totalItems={totalItems}
           changePage={this.changePage}
         />
