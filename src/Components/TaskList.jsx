@@ -44,6 +44,7 @@ class TaskList extends React.Component {
     super(props);
     this.state = {
       currentPage: 1,
+      tasks: null,
       formData: {
         formFields: [],
         formButtons: []
@@ -229,6 +230,7 @@ class TaskList extends React.Component {
       endIndex
     );
 
+
     const totalPages = Math.ceil(totalItems / 10); // assuming 10 rows for each page
 
     const theme = createTheme({
@@ -306,7 +308,7 @@ class TaskList extends React.Component {
           </tbody>
         </table>
         <TableFooter
-          tasks={this.state.tasks}
+          tasks={tasks}
           currentPage={this.state.currentPage}
           totalPages={totalPages}
           itemsRange={ITEM_RANGE}
