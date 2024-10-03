@@ -42,9 +42,6 @@ class GenericModal extends Component {
       }
     }), () => {
       console.log("Updated form data:", this.state.formData);
-      if (this.props.onChange) {
-        this.props.onChange(this.state.formData);
-      }
     });
   };
 
@@ -53,14 +50,13 @@ class GenericModal extends Component {
   };
 
   closeModal = () => {
-    this.setState({ isOpen: false, isInitialized: false });
+    this.setState({ isOpen: false });
   };
 
   
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.onSubmit(this.state.formData);
-    this.props.closeModal(); // closes the modal after submission
 
   }
 
@@ -155,6 +151,7 @@ class GenericModal extends Component {
 
           </div>
           <div className="button-wrapper">
+          <Button text={"SUBMIT"} onClick={this.handleSubmit} styles = {buttonStyles} />
             {this.renderButtonFields()}
           </div>
         </div>

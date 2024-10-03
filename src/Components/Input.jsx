@@ -25,7 +25,6 @@ class Input extends Component {
 
   render() {
     const { name, type, placeholder, value, meta } = this.props;
-    console.log("Input component props: ", this.props);
 
     const renderInput = () => {
       switch (type) {

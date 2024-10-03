@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AccessTokenContext from "../context/AccessTokenContext";
 import DownloadJSON from "./DownloadJSON";
 import GenericModal from "./GenericModal";
+import axios from "axios";
 
 const ITEM_RANGE = 10;
 
@@ -111,7 +112,7 @@ class TaskList extends React.Component {
       const newRight =
         this.state.rightPointer + ITEM_RANGE > totalItems
           ? totalItems
-          : (this.state.rightPointer + ITEM_RANGE) % totalItems;
+          : (this.state.rightPointer + ITEM_RANGE);
       console.log("RIGHT POINTER: ", newRight);
       this.setState({
         leftPointer: newLeft,
@@ -134,11 +135,38 @@ class TaskList extends React.Component {
   };
 
   closeModal = () => this.setState({isEditing: false});
-  sendEditRequest = () => console.log("Edit request sent");
 
-  editTask = (index) => {
-    console.log("Task index to be edited: ", index);
-    const taskToEdit = this.props.data()[index];
+
+
+  sendEditRequest = async (formData) => {
+    const url = process.env.REACT_APP_TASK_MANAGER_BASE_ADDRESS.concat("/api/task");
+    // appeindig the selected task id to payload
+    formData["task_id"] = this.state.taskIndex;
+
+    const payload = formData;
+    const header = {
+      Authorization: `Bearer ${this.context.accessToken}`,
+    };
+    var response = await axios.put(url, payload, {
+      headers: header,
+    });
+
+    console.log("Edit data fetched: ", response);
+
+    if(response.status === 200){
+      this.closeModal();
+    }
+    else{
+      console.log("Error Occured: ", response.data);
+    }
+  }
+
+
+
+
+  editTask = (task_id) => {
+    console.log("Task index to be edited: ", task_id);
+    const taskToEdit = this.props.data().find(task => task.task_id === task_id);
     console.log("Task to be edited: ", taskToEdit);
     const formFields =  [
       {
@@ -196,14 +224,6 @@ class TaskList extends React.Component {
 
     const buttonFields = [
       {
-        text: "EDIT",
-        onClick: () => {
-          this.sendEditRequest(taskToEdit)
-        },
-        styles: {}
-
-      },
-      {
         text: "CLOSE",
         onClick: () => {this.closeModal()},
         styles: {}
@@ -218,7 +238,7 @@ class TaskList extends React.Component {
         
       },
       isEditing: true,
-      taskIndex: index
+      taskIndex: task_id
     }), () => console.log("Current state of task list state:", this.state));
       
   }
@@ -254,7 +274,7 @@ class TaskList extends React.Component {
     return ( 
       <div className="table-container">
         {/* using the key to enure a new instance of GenericModal is created each time we click on edit */}
-        {   this.state.isEditing && <GenericModal key={`edit-task-${this.state.taskIndex}`} formFields = {this.state.formData.formFields} buttonFields={this.state.formData.formButtons} />      }
+        {   this.state.isEditing && <GenericModal key={`edit-task-${this.state.taskIndex}`} formFields = {this.state.formData.formFields} buttonFields={this.state.formData.formButtons} onSubmit={this.sendEditRequest}/>      }
         <table aria-label="task list">
           <thead>
             <tr className="table-header">
@@ -276,8 +296,8 @@ class TaskList extends React.Component {
             <tr className="spacer-row">
               <td colSpan={7}></td>
             </tr>
-            {tasks.map((task, index) => (
-              <tr key={index}>
+            {tasks.map((task) => (
+              <tr key={task.task_id}>
                 <td>
                   <Checkbox />
                 </td>
@@ -297,10 +317,10 @@ class TaskList extends React.Component {
                   />
                 </td>
                 <td>
-                  <IconButton aria-label="edit" onClick={() => this.editTask(index)}>
+                  <IconButton aria-label="edit" onClick={() => this.editTask(task.task_id)}>
                     <EditIcon />
                   </IconButton>
-                  <IconButton aria-label="delete" onClick={() => this.deleteTask(index)}>
+                  <IconButton aria-label="delete" onClick={() => this.deleteTask(task.task_id)}>
                     <DeleteIcon />
                   </IconButton>
                 </td>
