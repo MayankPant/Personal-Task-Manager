@@ -80,6 +80,10 @@ class Input extends Component {
               style={{}}
             />
           );
+        case "label":
+          return (
+            <label>{value}</label>
+          )
         default:
           return (
             <input

@@ -50,7 +50,8 @@ class TaskList extends React.Component {
         formButtons: []
       },
       isEditing: false,
-      taskIndex: -1
+      taskIndex: -1,
+      isDeleting: false
     };
   }
 
@@ -110,7 +111,7 @@ class TaskList extends React.Component {
     }
   };
 
-  closeModal = () => this.setState({isEditing: false});
+  closeModal = () => this.setState({isEditing: false, isDeleting: false});
 
 
 
@@ -128,6 +129,28 @@ class TaskList extends React.Component {
     });
 
     console.log("Edit data fetched: ", response);
+
+    if(response.status === 200){
+      this.closeModal();
+    }
+    else{
+      console.log("Error Occured: ", response.data);
+    }
+  }
+
+  sendDeleteRequest = async (formData) => {
+    const url = process.env.REACT_APP_TASK_MANAGER_BASE_ADDRESS.concat(`/api/task/${this.state.taskIndex}`);
+    // appeindig the selected task id to payload
+    formData["task_id"] = this.state.taskIndex;
+
+    const header = {
+      Authorization: `Bearer ${this.context.accessToken}`,
+    };
+    var response = await axios.delete(url, {
+      headers: header,
+    });
+
+    console.log("Delete data fetched: ", response);
 
     if(response.status === 200){
       this.closeModal();
@@ -218,7 +241,41 @@ class TaskList extends React.Component {
     }), () => console.log("Current state of task list state:", this.state));
       
   }
+  
+  deleteTask = (task_id) => {
+    console.log("Task index to be edited: ", task_id);
+    const taskToEdit = this.props.data().find(task => task.task_id === task_id);
+    console.log("Task to be edited: ", taskToEdit);
+    const formFields =  [
+      {
+        name: "Warning:",
+        type: 'label',
+        placeholder: '',
+        value: "Are you sure you want to delete this entry?",
+        meta: {}
+      },
+    ]
 
+    const buttonFields = [
+      {
+        text: "CLOSE",
+        onClick: () => {this.closeModal()},
+        styles: {}
+      }
+    ]
+
+    this.setState((prevState) => ({
+      formData: {
+        ...prevState.formData,
+        formFields: formFields,
+        formButtons: buttonFields,
+        
+      },
+      isDeleting: true,
+      taskIndex: task_id
+    }), () => console.log("Current state of task list state:", this.state));
+      
+  }
   render() {
     console.log("Form Data: ", this.state.formData);
     const data = this.props.data();
@@ -226,8 +283,8 @@ class TaskList extends React.Component {
     const startIndex = (this.state.currentPage - 1) * ITEM_RANGE + 1;
     const endIndex = Math.min(this.state.currentPage * ITEM_RANGE, totalItems);
     const tasks = data.slice(
-      startIndex,
-      endIndex
+      startIndex - 1,
+      endIndex + 1
     );
 
 
@@ -254,6 +311,7 @@ class TaskList extends React.Component {
       <div className="table-container">
         {/* using the key to enure a new instance of GenericModal is created each time we click on edit */}
         {   this.state.isEditing && <GenericModal key={`edit-task-${this.state.taskIndex}`} formFields = {this.state.formData.formFields} buttonFields={this.state.formData.formButtons} onSubmit={this.sendEditRequest}/>      }
+        {   this.state.isDeleting && <GenericModal key={`edit-task-${this.state.taskIndex}`} formFields = {this.state.formData.formFields} buttonFields={this.state.formData.formButtons} onSubmit={this.sendDeleteRequest}/>      }
         <table aria-label="task list">
           <thead>
             <tr className="table-header">

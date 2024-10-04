@@ -90,6 +90,7 @@ class GenericModal extends Component {
         case 'checkbox':
         case 'radio':
         case 'textarea':
+        case 'label':
             return (
               <div key={index}>
                 <Input
