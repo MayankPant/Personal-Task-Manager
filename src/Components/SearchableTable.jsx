@@ -59,12 +59,29 @@ static contextType = AccessTokenContext;
     });
   };
 
+  updateTask = (updatedTask) => {
+    console.log("Updating the task in parent component: ", this.state.tasks, updatedTask);
+    this.setState((prevState) => ({
+      tasks: prevState.tasks.map((task) =>
+        task.task_id === updatedTask.task_id ? updatedTask : task
+      ),
+    }));
+  };
+
+  deleteTask = (taskId) => {
+    this.setState((prevState) => ({
+      tasks: prevState.tasks.filter((task) => task.task_id !== taskId),
+    }));
+  };
+
+
+
   render() {
     return (
       <>
         <div className="container">
           <SearchComponent onSearch={this.handleSearch} />
-          <TaskList data={this.filteredData} />
+          <TaskList updateTask={this.updateTask} deleteTask={this.deleteTask} data={this.filteredData} />
         </div>
       </>
     );

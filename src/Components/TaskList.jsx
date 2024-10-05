@@ -130,7 +130,8 @@ class TaskList extends React.Component {
 
     console.log("Edit data fetched: ", response);
 
-    if(response.status === 200){
+    if(response.status === 202){
+      this.props.updateTask(response.data.task_edited);
       this.closeModal();
     }
     else{
@@ -153,6 +154,7 @@ class TaskList extends React.Component {
     console.log("Delete data fetched: ", response);
 
     if(response.status === 200){
+      this.props.deleteTask(this.state.taskIndex);
       this.closeModal();
     }
     else{
