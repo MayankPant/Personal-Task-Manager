@@ -371,7 +371,7 @@ class TaskList extends React.Component {
           tasks={tasks}
           currentPage={this.state.currentPage}
           totalPages={totalPages}
-          itemsRange={ITEM_RANGE}
+          itemsRange={endIndex}
           totalItems={totalItems}
           changePage={this.changePage}
         />
