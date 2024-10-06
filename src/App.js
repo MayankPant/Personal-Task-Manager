@@ -12,6 +12,7 @@ import Login from "./views/Login.jsx";
 import AccessTokenContext from "./context/AccessTokenContext.js";
 import { useContext } from "react";
 import SearchableTable from "./Components/SearchableTable.jsx";
+import Analytics from "./views/Analytics.jsx";
 
 // Private route component
 const PrivateRoute = ({ children }) => {
@@ -50,6 +51,14 @@ function App() {
               }
             />
             <Route path="login" element={<Login />} />
+            <Route
+              path="analytics"
+              element={
+                <PrivateRoute>
+                  <Analytics />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </main>
       </Router>

@@ -1,0 +1,9 @@
+.chart-container{
+    
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

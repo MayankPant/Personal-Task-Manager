@@ -44,8 +44,8 @@ class AppBar extends Component {
             styles={navItemStyles}
           />
           <NavItem
-            navItemName={"ABOUT"}
-            routeTo={"/about"}
+            navItemName={"ANALYTICS"}
+            routeTo={"/analytics"}
             styles={navItemStyles}
           />
           <NavItem
